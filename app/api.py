@@ -6,6 +6,26 @@ from typing import Union
 
 router = APIRouter()
 
+@router.post("/register", response_model=models.User)
+def register_user(user: models.UserCreate, db: Session = Depends(database.get_db)):
+    # Check if user already exists
+    db_user = db.query(database.User).filter(database.User.username == user.username).first()
+    if db_user:
+        raise HTTPException(status_code=400, detail="Username already registered")
+    
+    # Create new user
+    hashed_password = auth_service.get_password_hash(user.password)
+    db_user = database.User(
+        username=user.username,
+        email=user.email,
+        full_name=user.full_name,
+        hashed_password=hashed_password
+    )
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
 @router.post("/ai-task", response_model=Union[models.QAResponse, models.LatestAnswerResponse, models.ImageResponse, models.ContentResponse])
 async def ai_task(
     request: models.AITaskRequest,

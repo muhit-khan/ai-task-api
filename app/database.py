@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
@@ -20,6 +20,15 @@ class QARecord(Base):
     question = Column(String, index=True)
     answer = Column(Text)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    full_name = Column(String)
+    hashed_password = Column(String)
+    disabled = Column(Boolean, default=False)
 
 def create_db_and_tables():
     Base.metadata.create_all(bind=engine)
