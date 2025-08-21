@@ -6,6 +6,13 @@ from app.database import create_db_and_tables, get_db
 from app.services.auth_service import create_access_token, authenticate_user
 from datetime import timedelta
 from sqlalchemy.orm import Session
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+API_V1_STR = os.getenv("API_V1_STR", "/api/v1")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,7 +25,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-app.include_router(api_router)
+app.include_router(api_router, prefix=API_V1_STR)
 
 @app.post("/token", response_model=dict)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):

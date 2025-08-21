@@ -1,5 +1,9 @@
 import os
 import sys
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,12 +27,18 @@ def create_default_user():
             print("Default user 'admin' already exists.")
             return
         
+        # Get default user credentials from environment variables
+        default_username = os.getenv("ADMIN_USERNAME", "admin")
+        default_email = os.getenv("ADMIN_EMAIL", "admin@example.com")
+        default_full_name = os.getenv("ADMIN_FULL_NAME", "Administrator")
+        default_password = os.getenv("ADMIN_PASSWORD", "admin")
+        
         # Create default user
-        hashed_password = get_password_hash("admin")
+        hashed_password = get_password_hash(default_password)
         default_user = User(
-            username="admin",
-            email="admin@example.com",
-            full_name="Administrator",
+            username=default_username,
+            email=default_email,
+            full_name=default_full_name,
             hashed_password=hashed_password
         )
         

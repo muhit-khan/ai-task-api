@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
-API_URL = "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2"
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "your-huggingface-api-key")
+QA_MODEL_NAME = os.getenv("QA_MODEL_NAME", "deepset/roberta-base-squad2")
+API_URL = os.getenv("QA_API_URL", f"https://api-inference.huggingface.co/models/{QA_MODEL_NAME}")
 
 def perform_qa(db: Session, question: str, context: str):
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}

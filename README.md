@@ -73,6 +73,60 @@ AI Task API is a FastAPI-based web application that provides various AI-powered 
 
 ## Usage
 
+### Using the Management Script
+
+The project includes a management script `manage.sh` that provides a convenient menu interface for common tasks.
+
+1. Make the script executable:
+
+   ```bash
+   chmod +x manage.sh
+   ```
+
+2. Run the script:
+
+   ```bash
+   ./manage.sh
+   ```
+
+3. Use the menu options to perform various tasks:
+   - Start the development server
+   - Run tests
+   - Create default user
+   - Check environment variables
+   - Create database tables
+   - Reset database
+   - Show database information
+   - Show project structure
+   - Show API endpoints
+   - Install dependencies
+   - Create virtual environment
+   - Run demo API calls
+
+### Menu Options Explanation
+
+1. **Start development server**: Starts the FastAPI development server with auto-reload enabled.
+2. **Run tests**: Executes any test files in the project directory (if pytest is installed).
+3. **Create default user**: Creates a default admin user with username "admin" and password "admin".
+4. **Check environment variables**: Displays the current environment variables from the .env file.
+5. **Create database tables**: Creates the necessary database tables if they don't exist.
+6. **Reset database**: Deletes the existing database file and creates new tables.
+7. **Show database information**: Displays information about the database file and tables.
+8. **Show project structure**: Lists all files in the project directory.
+9. **Show API endpoints**: Displays information about the available API endpoints.
+10. **Install dependencies**: Installs Python dependencies from requirements.txt.
+11. **Create virtual environment**: Creates a Python virtual environment.
+12. **Run demo API calls**: Executes demo API calls to showcase the functionality of the services.
+
+### Prerequisites
+
+- Python 3.8+
+- pip (Python package installer)
+- curl (for demo API calls)
+- netcat (nc) command for checking if the server is running (used in demo API calls)
+
+### Manual Usage
+
 1. Start the development server:
 
    ```bash

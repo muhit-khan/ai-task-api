@@ -1,4 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 from sqlalchemy.orm import Session
 from app import models, database
 from app.services import qa_service, image_service, content_service, auth_service
@@ -36,7 +41,7 @@ async def ai_task(
         if not request.prompt:
             raise HTTPException(status_code=400, detail="Prompt is required for Q&A task")
         # For simplicity, using a generic context. In a real app, this would be dynamic.
-        context = "The weather in London is usually rainy."
+        context = os.getenv("QA_CONTEXT", "The weather in London is usually rainy.")
         answer = qa_service.perform_qa(db, request.prompt, context)
         return {"answer": answer}
 

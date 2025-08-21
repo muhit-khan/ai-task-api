@@ -1,8 +1,13 @@
 import requests
 import os
+from dotenv import load_dotenv
 
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
-API_URL = "https://api-inference.huggingface.co/models/gpt2"
+# Load environment variables from .env file
+load_dotenv()
+
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "your-huggingface-api-key")
+CONTENT_GENERATION_MODEL_NAME = os.getenv("CONTENT_GENERATION_MODEL_NAME", "gpt2")
+API_URL = os.getenv("CONTENT_GENERATION_API_URL", f"https://api-inference.huggingface.co/models/{CONTENT_GENERATION_MODEL_NAME}")
 
 def generate_content(platform: str, prompt: str):
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}

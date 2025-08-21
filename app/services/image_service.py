@@ -2,9 +2,14 @@ import requests
 import os
 import base64
 from io import BytesIO
+from dotenv import load_dotenv
 
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
-API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
+# Load environment variables from .env file
+load_dotenv()
+
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "your-huggingface-api-key")
+IMAGE_GENERATION_MODEL_NAME = os.getenv("IMAGE_GENERATION_MODEL_NAME", "runwayml/stable-diffusion-v1-5")
+API_URL = os.getenv("IMAGE_GENERATION_API_URL", f"https://api-inference.huggingface.co/models/{IMAGE_GENERATION_MODEL_NAME}")
 
 def generate_image(prompt: str):
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}
