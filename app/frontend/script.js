@@ -1,5 +1,5 @@
 // Configuration
-const API_BASE_URL = 'https://frozen-mountain-47737-3990429add68.herokuapp.com/';
+const API_BASE_URL = 'https://frozen-mountain-47737-3990429add68.herokuapp.com';
 const API_ENDPOINT = '/ai-task/';
 const MODEL_INFO_ENDPOINT = '/ai-task/models/info';
 const MODEL_STATUS_ENDPOINT = '/ai-task/models/status';
