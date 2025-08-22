@@ -1,37 +1,44 @@
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.ext.declarative import declarative_base
-import datetime
+from sqlalchemy.orm import sessionmaker
+from datetime import datetime
 import os
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./database/ai_task.db")
+DATABASE_URL = "sqlite:///./app/database/app.db"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 Base = declarative_base()
 
-class QARecord(Base):
-    __tablename__ = "qa_records"
+class QAHistory(Base):
+    __tablename__ = "qa_history"
+    
     id = Column(Integer, primary_key=True, index=True)
-    question = Column(String, index=True)
-    answer = Column(Text)
-    timestamp = Column(DateTime, default=datetime.datetime.utcnow)
+    question = Column(Text, nullable=False)
+    answer = Column(Text, nullable=False)
+    context = Column(Text)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
-class User(Base):
-    __tablename__ = "users"
+class ImageRecord(Base):
+    __tablename__ = "image_records"
+    
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-    full_name = Column(String)
-    hashed_password = Column(String)
-    disabled = Column(Boolean, default=False)
+    prompt = Column(Text, nullable=False)
+    image_data = Column(Text)  # Store base64 encoded image or URL
+    created_at = Column(DateTime, default=datetime.utcnow)
 
-def create_db_and_tables():
-    Base.metadata.create_all(bind=engine)
+class ContentRecord(Base):
+    __tablename__ = "content_records"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    prompt = Column(Text, nullable=False)
+    platform = Column(String, nullable=False)
+    content = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+# Create tables
+Base.metadata.create_all(bind=engine)
 
 def get_db():
     db = SessionLocal()

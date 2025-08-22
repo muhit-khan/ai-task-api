@@ -1,35 +1,54 @@
-from sqlalchemy.orm import Session
-from app.database import QARecord
 import requests
-import os
-from dotenv import load_dotenv
+from typing import Optional
+from app.database import QAHistory, get_db
+from app.settings import settings
+from sqlalchemy.orm import Session
 
-# Load environment variables from .env file
-load_dotenv()
+# Get Hugging Face API key from settings
+HUGGINGFACE_API_KEY = settings.huggingface_api_key
+HF_API_URL = "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2"
 
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY", "your-huggingface-api-key")
-QA_MODEL_NAME = os.getenv("QA_MODEL_NAME", "deepset/roberta-base-squad2")
-API_URL = os.getenv("QA_API_URL", f"https://api-inference.huggingface.co/models/{QA_MODEL_NAME}")
-
-def perform_qa(db: Session, question: str, context: str):
-    headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}
+def perform_qa(question: str, context: Optional[str] = None, db: Session = None) -> str:
+    """
+    Perform Q&A using Hugging Face API
+    """
+    # If no context provided, use a default one
+    if not context:
+        context = "Artificial intelligence (AI) is intelligence demonstrated by machines, in contrast to the natural intelligence displayed by humans and animals. Leading AI textbooks define the field as the study of \"intelligent agents\": any device that perceives its environment and takes actions that maximize its chance of successfully achieving its goals."
+    
+    # Prepare the payload
     payload = {
         "inputs": {
             "question": question,
-            "context": context,
-        },
+            "context": context
+        }
     }
-    response = requests.post(API_URL, headers=headers, json=payload)
-    answer = response.json().get("answer", "No answer found.")
-
-    db_record = QARecord(question=question, answer=answer)
-    db.add(db_record)
-    db.commit()
-    db.refresh(db_record)
+    
+    # Set up headers
+    headers = {"Authorization": f"Bearer {HUGGINGFACE_API_KEY}"}
+    
+    # Make the API call
+    try:
+        response = requests.post(HF_API_URL, headers=headers, json=payload)
+        response.raise_for_status()
+        result = response.json()
+        answer = result.get("answer", "No answer found")
+    except Exception as e:
+        # Fallback answer if API call fails
+        answer = f"Error occurred while fetching answer from AI: {str(e)}. This is a simulated answer."
+    
+    # Store in database
+    if db:
+        qa_record = QAHistory(question=question, answer=answer, context=context)
+        db.add(qa_record)
+        db.commit()
+        db.refresh(qa_record)
+    
     return answer
 
-def get_latest_answer(db: Session):
-    latest_record = db.query(QARecord).order_by(QARecord.id.desc()).first()
-    if latest_record:
-        return {"question": latest_record.question, "answer": latest_record.answer}
-    return None
+def get_latest_answer(db: Session) -> Optional[str]:
+    """
+    Retrieve the latest answer from the database
+    """
+    latest_qa = db.query(QAHistory).order_by(QAHistory.created_at.desc()).first()
+    return latest_qa.answer if latest_qa else None
