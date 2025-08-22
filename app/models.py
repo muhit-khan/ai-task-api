@@ -1,43 +1,39 @@
 from pydantic import BaseModel
-from typing import Optional, Literal
+from typing import Optional, Union
 
-class AITaskRequest(BaseModel):
-    task: Literal["qa", "get_latest_answer", "generate_image", "generate_content"]
-    prompt: Optional[str] = None
-    platform: Optional[str] = None
-
-class QAResponse(BaseModel):
-    answer: str
-
-class LatestAnswerResponse(BaseModel):
+class QATask(BaseModel):
+    task: str = "qa"
     question: str
-    answer: str
+    context: Optional[str] = None
 
-class ImageResponse(BaseModel):
-    image_url: Optional[str] = None
-    image_base64: Optional[str] = None
+class LatestAnswerTask(BaseModel):
+    task: str = "latest_answer"
 
-class ContentResponse(BaseModel):
-    content: str
+class ImageGenerationTask(BaseModel):
+    task: str = "image_generation"
+    prompt: str
 
-class Token(BaseModel):
-    access_token: str
-    token_type: str
+class ContentGenerationTask(BaseModel):
+    task: str = "content_generation"
+    prompt: str
+    platform: str
 
-class TokenData(BaseModel):
-    username: Optional[str] = None
+class TaskResponse(BaseModel):
+    task: str
+    result: Union[str, dict]
 
-class User(BaseModel):
-    username: str
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-    disabled: bool = False
+class QARequest(BaseModel):
+    task: str
+    question: str
+    context: Optional[str] = None
 
-class UserInDB(User):
-    hashed_password: str
+class ImageRequest(BaseModel):
+    task: str
+    prompt: str
 
-class UserCreate(BaseModel):
-    username: str
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-    password: str
+class ContentRequest(BaseModel):
+    task: str
+    prompt: str
+    platform: str
+
+TaskRequest = Union[QARequest, ImageRequest, ContentRequest]
