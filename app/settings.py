@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     
     # Server settings
     host: str = env_vars.get("HOST") or "127.0.0.1"  # Default to localhost for security
-    port: int = int(env_vars.get("PORT") or "8000")
+    port: int = int(env_vars.get("PORT") or os.environ.get("PORT", "8000"))
     debug: bool = (env_vars.get("DEBUG") or "True").lower() == "true"
     
     class Config:
