@@ -1,28 +1,18 @@
-# Core FastAPI dependencies
+# Optimized requirements for Render deployment
+# Using newer versions with pre-compiled wheels
+
 fastapi>=0.104.0,<0.111.0
 uvicorn[standard]>=0.24.0,<0.28.0
-
-# Configuration and environment
 python-dotenv>=1.0.0,<2.0.0
-
-# Database
 sqlalchemy>=2.0.20,<2.1.0
-
-# Data validation (using newer version with pre-compiled wheels)
 pydantic>=2.6.0,<2.7.0
 pydantic-settings>=2.2.0,<2.3.0
-
-# HTTP client
 httpx>=0.25.0,<0.28.0
-
-# File handling
 python-multipart>=0.0.6,<0.1.0
 Pillow>=10.1.0,<11.0.0
 aiofiles>=23.2.0,<24.0.0
-
-# Additional dependencies
 requests>=2.31.0,<3.0.0
 openai>=1.12.0,<2.0.0
 
-# Force binary wheels to avoid compilation issues
+# Ensure binary wheels are used (no compilation)
 --only-binary=all

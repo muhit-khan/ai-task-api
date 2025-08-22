@@ -264,27 +264,64 @@ curl -X POST "https://frozen-mountain-47737-3990429add68.herokuapp.com/ai-task/"
 ### Render Deployment
 
 1. Connect GitHub repository to Render
-2. Set build command: `pip install -r requirements.txt`
-3. Set start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-4. Add environment variables in Render dashboard
+2. Use the optimized `render.yaml` configuration (included)
+3. Set Python version to 3.11.8 in environment variables
+4. The build will use: `pip install -r requirements.txt --no-cache-dir --prefer-binary`
+5. Add your `OPENROUTER_API_KEY` in Render dashboard
+
+#### Troubleshooting Render Issues
+
+**Common Issue: Pydantic Core Compilation Error**
+
+If you encounter this error:
+
+```
+error: failed to create directory `/usr/local/cargo/registry/cache/`
+Caused by: Read-only file system (os error 30)
+```
+
+**Solution**: The project includes optimized requirements that avoid Rust compilation:
+
+1. ✅ **Updated Requirements**: Uses Pydantic 2.6+ with pre-compiled wheels
+2. ✅ **Python Version**: Uses Python 3.11.8 (better package compatibility)
+3. ✅ **Binary-Only**: `--only-binary=all` flag prevents source compilation
+4. ✅ **Flexible Versions**: Version ranges allow Render to use cached wheels
+
+**Alternative Requirements File**: Use `requirements-render.txt` if issues persist:
+
+```bash
+# In render.yaml, change buildCommand to:
+buildCommand: |
+  pip install --upgrade pip
+  pip install -r requirements-render.txt --no-cache-dir --prefer-binary
+```
 
 ### Heroku Deployment
 
 1. Create `Procfile`: `web: uvicorn main:app --host 0.0.0.0 --port $PORT`
-2. Create `runtime.txt`: `python-3.12.7`
+2. Use included `runtime.txt`: `python-3.11.8`
 3. Deploy: `git push heroku main`
+4. Set environment variables: `heroku config:set OPENROUTER_API_KEY=your_key`
 
 ### Docker Deployment
 
-```dockerfile
-FROM python:3.12.7-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+Use the included optimized Dockerfile:
+
+```bash
+# Build image
+docker build -t ai-task-api .
+
+# Run container
+docker run -p 8000:8000 -e OPENROUTER_API_KEY=your_key ai-task-api
 ```
+
+**Docker Features**:
+
+- ✅ Python 3.11.8 base image
+- ✅ Pre-compiled package installation
+- ✅ Non-root user for security
+- ✅ Health checks included
+- ✅ Optimized layer caching
 
 ## 📊 Performance & Features
 
