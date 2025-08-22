@@ -6,18 +6,18 @@ A comprehensive FastAPI application that handles multiple AI-related tasks throu
 
 ## 🚀 Live Demo
 
-- **🌐 Live Application**: [https://frozen-mountain-47737-3990429add68.herokuapp.com](https://frozen-mountain-47737-3990429add68.herokuapp.com)
-- **📖 API Documentation**: [https://frozen-mountain-47737-3990429add68.herokuapp.com/docs](https://frozen-mountain-47737-3990429add68.herokuapp.com/docs)
-- **💻 Web Interface**: [https://frozen-mountain-47737-3990429add68.herokuapp.com/frontend/index.html](https://frozen-mountain-47737-3990429add68.herokuapp.com/frontend/index.html)
+- **🌐 Live Application**: [https://ai-task-api-jaa6.onrender.com](https://ai-task-api-jaa6.onrender.com)
+- **📖 API Documentation**: [https://ai-task-api-jaa6.onrender.com/docs](https://ai-task-api-jaa6.onrender.com/docs)
+- **💻 Web Interface**: [https://ai-task-api-jaa6.onrender.com/frontend/index.html](https://ai-task-api-jaa6.onrender.com/frontend/index.html)
 
 ### 🎯 Quick Access
 
 **Try the API Now:**
 
-- **🌐 Main Application**: [frozen-mountain-47737-3990429add68.herokuapp.com](https://frozen-mountain-47737-3990429add68.herokuapp.com)
-- **📱 Web Interface**: [Open ChatGPT-like Interface](https://frozen-mountain-47737-3990429add68.herokuapp.com/frontend/index.html)
-- **📚 API Docs**: [Interactive Swagger UI](https://frozen-mountain-47737-3990429add68.herokuapp.com/docs)
-- **📋 Alternative Docs**: [ReDoc Documentation](https://frozen-mountain-47737-3990429add68.herokuapp.com/redoc)
+- **🌐 Main Application**: [ai-task-api-jaa6.onrender.com](https://ai-task-api-jaa6.onrender.com)
+- **📱 Web Interface**: [Open ChatGPT-like Interface](https://ai-task-api-jaa6.onrender.com/frontend/index.html)
+- **📚 API Docs**: [Interactive Swagger UI](https://ai-task-api-jaa6.onrender.com/docs)
+- **📋 Alternative Docs**: [ReDoc Documentation](https://ai-task-api-jaa6.onrender.com/redoc)
 
 ## 📋 Task Requirements Fulfilled
 
@@ -425,7 +425,6 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ---
 
-**Developed by**: [Your Name]  
-**GitHub Repository**: [Repository Link]  
-**Live Demo**: [Deployment Link]  
-**Submission Date**: [Date]
+**Developed by**: [MUHIT KHAN](https://muhit-khan.vercel.app)  
+**GitHub Repository**: [Repository Link](https://github.com/muhit-khan/ai-task-api)  
+**Live Demo**: [Deployment Link](https://ai-task-api-jaa6.onrender.com)  
