@@ -1,13 +1,13 @@
-import os
 import requests
 import base64
 from io import BytesIO
 from PIL import Image
 from app.database import ImageRecord, get_db
+from app.settings import settings
 from sqlalchemy.orm import Session
 
-# Get Hugging Face API key from environment
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+# Get Hugging Face API key from settings
+HUGGINGFACE_API_KEY = settings.huggingface_api_key
 HF_API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2-1"
 
 def generate_image(prompt: str, db: Session = None) -> str:

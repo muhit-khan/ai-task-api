@@ -1,10 +1,10 @@
-import os
 import requests
 from app.database import ContentRecord, get_db
+from app.settings import settings
 from sqlalchemy.orm import Session
 
-# Get Hugging Face API key from environment
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+# Get Hugging Face API key from settings
+HUGGINGFACE_API_KEY = settings.huggingface_api_key
 HF_API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-base"
 
 def generate_content(prompt: str, platform: str, db: Session = None) -> str:

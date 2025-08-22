@@ -66,6 +66,9 @@ ai_task_project/
    ```
    HUGGINGFACE_API_KEY=your_huggingface_api_key_here
    ```
+   
+   The application uses `python-dotenv` and `pydantic-settings` to load and validate environment variables. 
+   It will raise an error if required environment variables like `HUGGINGFACE_API_KEY` are not set.
 
 5. **Run the application**:
    ```bash

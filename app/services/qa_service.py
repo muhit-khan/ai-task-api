@@ -1,11 +1,11 @@
-import os
 import requests
 from typing import Optional
 from app.database import QAHistory, get_db
+from app.settings import settings
 from sqlalchemy.orm import Session
 
-# Get Hugging Face API key from environment
-HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY",)
+# Get Hugging Face API key from settings
+HUGGINGFACE_API_KEY = settings.huggingface_api_key
 HF_API_URL = "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2"
 
 def perform_qa(question: str, context: Optional[str] = None, db: Session = None) -> str:
