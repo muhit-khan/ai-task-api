@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Task Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-robot"></i> AI Task Interface</h1>
+            </div>
+            <div class="new-chat-btn-container">
+                <button id="newChatBtn" class="new-chat-btn">
+                    <i class="fas fa-plus"></i> New Chat
+                </button>
+            </div>
+            <div class="history-container">
+                <div class="history-header">
+                    <h3><i class="fas fa-history"></i> Recent Chats</h3>
+                </div>
+                <div id="chatHistory" class="chat-history">
+                    <!-- Chat history will be populated here -->
+                </div>
+            </div>
+            <div class="sidebar-footer">
+                <div class="api-status">
+                    <span id="apiStatus" class="status-indicator disconnected">
+                        <i class="fas fa-circle"></i> API Disconnected
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Chat Container -->
+            <div id="chatContainer" class="chat-container">
+                <div class="chat-header">
+                    <h2>AI Assistant</h2>
+                    <div class="task-selector">
+                        <select id="taskType">
+                            <option value="qa">Question & Answer</option>
+                            <option value="content_generation">Content Generation</option>
+                            <option value="image_generation">Image Generation</option>
+                            <option value="latest_answer">Latest Answer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="chatMessages" class="chat-messages">
+                    <div class="welcome-message">
+                        <div class="welcome-content">
+                            <h2>Welcome to AI Task Interface</h2>
+                            <p>I can help you with various AI tasks. Select a task type and start chatting!</p>
+                            <div class="features-grid">
+                                <div class="feature-card">
+                                    <i class="fas fa-question-circle"></i>
+                                    <h3>Q&A</h3>
+                                    <p>Ask questions with optional context</p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-file-alt"></i>
+                                    <h3>Content</h3>
+                                    <p>Generate platform-specific content</p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-image"></i>
+                                    <h3>Images</h3>
+                                    <p>Create images from text prompts</p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-history"></i>
+                                    <h3>History</h3>
+                                    <p>Retrieve previous answers</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Input Area -->
+                <div class="input-container">
+                    <div id="contextInput" class="context-input hidden">
+                        <textarea id="contextText" placeholder="Enter context for your question..."></textarea>
+                    </div>
+                    
+                    <div id="platformInput" class="platform-input hidden">
+                        <select id="platformType">
+                            <option value="twitter">Twitter</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="default">Default</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-area">
+                        <textarea 
+                            id="userInput" 
+                            placeholder="Message AI..." 
+                            rows="1"
+                        ></textarea>
+                        <button id="sendBtn" class="send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="input-hints">
+                        <small>Press Enter to send, Shift+Enter for new line</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
