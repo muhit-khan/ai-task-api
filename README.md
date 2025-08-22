@@ -6,9 +6,18 @@ A comprehensive FastAPI application that handles multiple AI-related tasks throu
 
 ## 🚀 Live Demo
 
-- **🌐 Live Application**: [Deployed Demo Link](https://your-deployment-url.com)
-- **📖 API Documentation**: [https://your-deployment-url.com/docs](https://your-deployment-url.com/docs)
-- **💻 Web Interface**: [https://your-deployment-url.com/frontend/index.html](https://your-deployment-url.com/frontend/index.html)
+- **🌐 Live Application**: [https://frozen-mountain-47737-3990429add68.herokuapp.com](https://frozen-mountain-47737-3990429add68.herokuapp.com)
+- **📖 API Documentation**: [https://frozen-mountain-47737-3990429add68.herokuapp.com/docs](https://frozen-mountain-47737-3990429add68.herokuapp.com/docs)
+- **💻 Web Interface**: [https://frozen-mountain-47737-3990429add68.herokuapp.com/frontend/index.html](https://frozen-mountain-47737-3990429add68.herokuapp.com/frontend/index.html)
+
+### 🎯 Quick Access
+
+**Try the API Now:**
+
+- **🌐 Main Application**: [frozen-mountain-47737-3990429add68.herokuapp.com](https://frozen-mountain-47737-3990429add68.herokuapp.com)
+- **📱 Web Interface**: [Open ChatGPT-like Interface](https://frozen-mountain-47737-3990429add68.herokuapp.com/frontend/index.html)
+- **📚 API Docs**: [Interactive Swagger UI](https://frozen-mountain-47737-3990429add68.herokuapp.com/docs)
+- **📋 Alternative Docs**: [ReDoc Documentation](https://frozen-mountain-47737-3990429add68.herokuapp.com/redoc)
 
 ## 📋 Task Requirements Fulfilled
 
@@ -218,7 +227,7 @@ The application includes Model Context Protocol (MCP) integration for AI tool ex
 **Q&A Test**:
 
 ```bash
-curl -X POST "http://localhost:8000/ai-task/" \
+curl -X POST "https://frozen-mountain-47737-3990429add68.herokuapp.com/ai-task/" \
   -H "Content-Type: application/json" \
   -d '{
     "task": "qa",
@@ -230,7 +239,7 @@ curl -X POST "http://localhost:8000/ai-task/" \
 **Image Generation Test**:
 
 ```bash
-curl -X POST "http://localhost:8000/ai-task/" \
+curl -X POST "https://frozen-mountain-47737-3990429add68.herokuapp.com/ai-task/" \
   -H "Content-Type: application/json" \
   -d '{
     "task": "image_generation",
@@ -241,7 +250,7 @@ curl -X POST "http://localhost:8000/ai-task/" \
 **Content Generation Test**:
 
 ```bash
-curl -X POST "http://localhost:8000/ai-task/" \
+curl -X POST "https://frozen-mountain-47737-3990429add68.herokuapp.com/ai-task/" \
   -H "Content-Type: application/json" \
   -d '{
     "task": "content_generation",
