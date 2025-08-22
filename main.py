@@ -32,10 +32,6 @@ app.include_router(api_router)
 async def root():
     return {"message": "AI Task API is running. Visit /frontend/index.html for the web interface."}
 
-@app.get("/")
-async def root():
-    return {"message": "Welcome to the AI Task API"}
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host=settings.host, port=settings.port)

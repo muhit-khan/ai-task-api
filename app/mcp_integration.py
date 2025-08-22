@@ -48,12 +48,28 @@ class MCPClient:
     
     async def _calculator(self, arguments: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Simulate a calculator tool
+        Simulate a calculator tool with safe operations
         """
         expression = arguments.get("expression", "")
         try:
-            # In a real implementation, this would be a secure calculator
-            result = eval(expression)  # Note: eval is dangerous in production
+            # Safe calculator implementation - only allow basic operations
+            # Remove any non-numeric/operator characters for safety
+            import re
+            
+            # Allow only numbers, basic operators, parentheses, and decimal points
+            if not re.match(r'^[0-9+\-*/().\s]+$', expression):
+                return {"error": "Invalid characters in expression. Only numbers and basic operators (+, -, *, /, parentheses) are allowed."}
+            
+            # Use a safer approach for basic calculations
+            # This is still a simplified implementation - in production, use a proper math parser
+            allowed_names = {
+                "__builtins__": {},
+                "__name__": "calculator",
+                "__doc__": None,
+            }
+            
+            # Only allow basic math operations
+            result = eval(expression, allowed_names)
             return {"result": result}
         except Exception as e:
             return {"error": f"Calculation error: {str(e)}"}

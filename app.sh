@@ -38,6 +38,7 @@ show_welcome() {
     echo "Welcome to the AI Task API terminal interface!"
     echo "This tool allows you to interact with all API functionalities."
     echo ""
+
 }
 
 # Function to show main menu
@@ -49,9 +50,10 @@ show_menu() {
     echo "2. Get Latest Answer"
     echo "3. Image Generation"
     echo "4. Content Generation"
-    echo "5. View API Documentation"
-    echo "6. Check Server Status"
-    echo "7. Exit"
+    echo "5. Open Frontend UI"
+    echo "6. View API Documentation"
+    echo "7. Check Server Status"
+    echo "8. Exit"
     echo "========================================"
     echo ""
 }
@@ -179,7 +181,10 @@ generate_content() {
     echo "2. Facebook"
     echo "3. LinkedIn"
     echo "4. Instagram"
-    echo "5. Other"
+    echo "5. YouTube"
+    echo "6. TikTok"
+    echo "7. General Content"
+    echo "8. Other (custom)"
     read -r platform_choice
     
     case $platform_choice in
@@ -187,7 +192,10 @@ generate_content() {
         2) platform="facebook" ;;
         3) platform="linkedin" ;;
         4) platform="instagram" ;;
-        5) 
+        5) platform="youtube" ;;
+        6) platform="tiktok" ;;
+        7) platform="default" ;;
+        8) 
             echo "Enter platform name:"
             read -r platform
             ;;
@@ -195,6 +203,7 @@ generate_content() {
     esac
     
     echo "Generating $platform content based on: $prompt"
+    echo "This may take a moment..."
     
     # Make API request
     response=$(curl -s -X POST "$BASE_URL/ai-task" \
@@ -227,6 +236,53 @@ view_docs() {
     echo "2. ReDoc (Alternative): $BASE_URL/redoc"
     echo ""
     echo "You can open these URLs in your web browser to view detailed API documentation."
+    echo ""
+    echo "Press Enter to continue..."
+    read -r
+}
+
+# Function to open frontend UI
+open_frontend() {
+    echo -e "${BLUE}=== Opening Frontend UI ===${NC}"
+    
+    FRONTEND_URL="$BASE_URL/frontend/index.html"
+    
+    echo "Frontend URL: $FRONTEND_URL"
+    echo "Opening the AI Task Interface in your default browser..."
+    echo ""
+    
+    # Cross-platform browser opening
+    if command -v xdg-open > /dev/null 2>&1; then
+        # Linux
+        xdg-open "$FRONTEND_URL" > /dev/null 2>&1 &
+        echo -e "${GREEN}✓ Opened frontend UI in browser (Linux)${NC}"
+    elif command -v open > /dev/null 2>&1; then
+        # macOS
+        open "$FRONTEND_URL"
+        echo -e "${GREEN}✓ Opened frontend UI in browser (macOS)${NC}"
+    elif command -v start > /dev/null 2>&1; then
+        # Windows (Git Bash, WSL, or Cygwin)
+        start "$FRONTEND_URL"
+        echo -e "${GREEN}✓ Opened frontend UI in browser (Windows)${NC}"
+    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
+        # Windows Git Bash / Cygwin fallback
+        cmd.exe /c start "$FRONTEND_URL" > /dev/null 2>&1
+        echo -e "${GREEN}✓ Opened frontend UI in browser (Windows)${NC}"
+    else
+        # Fallback - display URL for manual opening
+        echo -e "${YELLOW}⚠ Could not detect browser command${NC}"
+        echo "Please manually open this URL in your browser:"
+        echo -e "${GREEN}$FRONTEND_URL${NC}"
+    fi
+    
+    echo ""
+    echo "The frontend interface provides:"
+    echo "• 🎨 Modern ChatGPT-like interface"
+    echo "• 💬 Interactive chat with AI models"
+    echo "• 🖼️  Real-time image generation and display"
+    echo "• ✍️  Platform-specific content creation"
+    echo "• 📱 Responsive design for all devices"
+    echo "• ⚡ Real-time API status monitoring"
     echo ""
     echo "Press Enter to continue..."
     read -r
@@ -271,7 +327,7 @@ main() {
     
     while true; do
         show_menu
-        echo "Select an option (1-7):"
+        echo "Select an option (1-8):"
         read -r choice
         
         case $choice in
@@ -279,14 +335,15 @@ main() {
             2) get_latest_answer ;;
             3) generate_image ;;
             4) generate_content ;;
-            5) view_docs ;;
-            6) check_status ;;
-            7) 
+            5) open_frontend ;;
+            6) view_docs ;;
+            7) check_status ;;
+            8) 
                 echo -e "${GREEN}Thank you for using the AI Task API!${NC}"
                 exit 0
                 ;;
             *) 
-                echo -e "${RED}Invalid option. Please select 1-7.${NC}"
+                echo -e "${RED}Invalid option. Please select 1-8.${NC}"
                 echo "Press Enter to continue..."
                 read -r
                 ;;
